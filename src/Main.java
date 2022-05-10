@@ -8,7 +8,7 @@ public class Main {
 		BOARD1 = new Board(BOARD_SIZE);
 		BOARD2 = new Board(BOARD_SIZE);
 		Ship ship = new Ship(0, 0, 4, true, BOARD1);
-		Ship ship2 = new Ship(1, 0, 2, false, BOARD1);
+		Ship ship2 = new Ship(0, 1, 2, false, BOARD1);
 		Ship ship3 = new Ship(5, 6, 3, false, BOARD1);
 
 		System.out.print(BOARD1);

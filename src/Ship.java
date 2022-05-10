@@ -10,8 +10,8 @@ public class Ship {
 
 		//Sets up the spaces array depending on position and whether the ship is horizontal
 		for(int i = 0; i < length; i++){
-			if(horizontal) spaces[i] = board.get(x, y + i);
-			else spaces[i] = board.get(x + i, y);
+			if(horizontal) spaces[i] = board.get(x + i, y);
+			else spaces[i] = board.get(x, y + i);
 		}
 
 		//Tells the spaces that they are occupied by a ship

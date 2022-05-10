@@ -14,7 +14,7 @@ public class Board {
 
 	//Gets an index in the grid
 	public Space get(int x, int y){
-		return grid[x][y];
+		return grid[y][x];
 	}
 
 	//Returns a string representing the board
