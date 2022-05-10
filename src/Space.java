@@ -19,7 +19,7 @@ public class Space {
 		return hit;
 	}
 
-	public void shootThis(){
+	public void shoot(){
 		hit = true;
 	}
 

@@ -11,6 +11,11 @@ public class Main {
 		Ship ship2 = new Ship(0, 1, 2, false, BOARD1);
 		Ship ship3 = new Ship(5, 6, 3, false, BOARD1);
 
+		BOARD1.get(1, 0).shoot();
+		BOARD1.get(0, 1).shoot();
+		BOARD1.get(3, 4).shoot();
+		BOARD1.get(9, 9).shoot();
+
 		System.out.print(BOARD1);
 	}
 
