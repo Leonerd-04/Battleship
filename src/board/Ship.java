@@ -1,14 +1,12 @@
 package board;
 
 public class Ship {
-	private String name;
-	private int length;
-	private boolean horizontal;
-	private Space[] spaces; //The spaces occupied by a ship
+	private final String name;
+	private final boolean horizontal;
+	private final Space[] spaces; //The spaces occupied by a ship
 
 	public Ship(String name, int x, int y, int length, boolean horizontal, Board board) throws ArrayIndexOutOfBoundsException{
 		this.name = name;
-		this.length = length;
 		this.horizontal = horizontal;
 		spaces = new Space[length];
 

@@ -1,7 +1,7 @@
 package board;
 
 public class Board {
-	private Space[][] grid;
+	private final Space[][] grid;
 
 	public Board(int size){
 		grid = new Space[size][size];
@@ -21,16 +21,16 @@ public class Board {
 
 	//Returns a string representing the board
 	public String toString(boolean hide){
-		String str = "";
+		StringBuilder str = new StringBuilder();
 
 		for(Space[] row : grid){
 			for(Space space : row){
-				str = str + space.display(hide) + ' ';
+				str.append(space.display(hide)).append(' ');
 			}
-			str = str + "\n";
+			str.append("\n");
 		}
 
-		return str;
+		return str.toString();
 	}
 
 	@Override

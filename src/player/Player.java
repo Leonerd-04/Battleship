@@ -14,7 +14,7 @@ public class Player {
 	public static String TRY_AGAIN_FEEDBACK = "Sorry, we can't understand your input. Try again.";
 
 	private ArrayList<Ship> ships;
-	private Board board;
+	private final Board board;
 
 	public Player(Board board){
 		this.board = board;

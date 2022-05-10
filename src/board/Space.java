@@ -34,7 +34,7 @@ public class Space {
 	//Returns a char that decides how a space should be displayed on the board depending on its state
 	public char display(boolean hide){
 		if(!hit){
-			if(hide | ship == null) return UNKNOWN;
+			if(hide || ship == null) return UNKNOWN;
 
 			if(ship.isHorizontal()) return SHIP_HORIZONTAL;
 			return SHIP_VERTICAL;
