@@ -1,6 +1,7 @@
 import com.sun.istack.internal.Nullable;
 
 public class Space {
+	//Chars representing how Spaces are displayed on a game board
 	public static char UNKNOWN = '-';
 	public static char MISS = 'o';
 	public static char HIT = '*';
@@ -8,7 +9,7 @@ public class Space {
 	public static char SHIP_VERTICAL = '|';
 
 	private boolean hit;
-	@Nullable private Ship ship;
+	@Nullable private Ship ship; //The ship occupying this space, null if the space is empty
 
 	public Space(){
 		hit = false;
@@ -20,13 +21,14 @@ public class Space {
 
 	public void shootThis(){
 		hit = true;
-
 	}
 
+	//Called whenever a ship is placed on a space
 	public void occupy(Ship ship){
 		this.ship = ship;
 	}
 
+	//Returns a char that decides how a space should be displayed on the board depending on its state
 	public char display(boolean hide){
 		if(!hit){
 			if(hide | ship == null) return UNKNOWN;
@@ -39,6 +41,4 @@ public class Space {
 		return HIT;
 
 	}
-
-
 }

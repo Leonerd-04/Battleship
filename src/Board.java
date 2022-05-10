@@ -4,6 +4,7 @@ public class Board {
 	public Board(int size){
 		grid = new Space[size][size];
 
+		//Fills the board's grid with new Spaces
 		for(int i = 0; i < grid.length; i++){
 			for(int j = 0; j < grid[i].length; j++){
 				grid[i][j] = new Space();
@@ -11,10 +12,12 @@ public class Board {
 		}
 	}
 
+	//Gets an index in the grid
 	public Space get(int x, int y){
 		return grid[x][y];
 	}
 
+	//Returns a string representing the board
 	public String toString(boolean hide){
 		String str = "";
 
@@ -28,6 +31,7 @@ public class Board {
 		return str;
 	}
 
+	@Override
 	public String toString(){
 		return toString(false);
 	}

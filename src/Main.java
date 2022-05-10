@@ -14,6 +14,7 @@ public class Main {
 	}
 
 
+	//Prints with a scrolling delay effect
 	public static void printScroll(String str, long msDelay) throws InterruptedException{
 		for(char c : str.toCharArray()){
 			System.out.print(c);
