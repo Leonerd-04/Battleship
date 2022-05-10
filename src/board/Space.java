@@ -1,6 +1,7 @@
 package board;
 
 import com.sun.istack.internal.Nullable;
+import player.Player;
 
 public class Space {
 	//Chars representing how Spaces are displayed on a game board
@@ -41,6 +42,12 @@ public class Space {
 
 		if(ship == null) return MISS;
 		return HIT;
+	}
 
+	//Gives String feedback when a space is shot at
+	public String hitString(){
+		if(ship == null) return Player.MISS_FEEDBACK;
+		if(!ship.sunk()) return Player.HIT_FEEDBACK;
+		return Player.SINK_FEEDBACK;
 	}
 }
