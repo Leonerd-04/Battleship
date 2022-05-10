@@ -1,3 +1,5 @@
+package board;
+
 import com.sun.istack.internal.Nullable;
 
 public class Space {

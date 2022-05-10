@@ -1,3 +1,5 @@
+package board;
+
 public class Board {
 	private Space[][] grid;
 

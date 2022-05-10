@@ -1,3 +1,5 @@
+package board;
+
 public class Ship {
 	private int length;
 	private boolean horizontal;

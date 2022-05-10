@@ -1,3 +1,5 @@
+import board.Board;
+import board.Ship;
 
 public class Main {
 	public static int BOARD_SIZE = 10;
