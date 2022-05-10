@@ -11,6 +11,7 @@ public class Player {
 	public static String HIT_FEEDBACK = "Hit!";
 	public static String MISS_FEEDBACK = "Miss!";
 	public static String SINK_FEEDBACK = "The opposing player's %s was sunk!";
+	public static String TRY_AGAIN_FEEDBACK = "Sorry, we can't understand your input. Try again.";
 
 	private ArrayList<Ship> ships;
 	private Board board;
@@ -27,7 +28,7 @@ public class Player {
 		String input = takeInput().toLowerCase();
 		int column = input.charAt(0) - 'a';
 		int row = Integer.parseInt(input.substring(1)) - 1;
-		if(column > Main.BOARD_SIZE || row > Main.BOARD_SIZE) return "!";
+		if(column > Main.BOARD_SIZE || row > Main.BOARD_SIZE) return TRY_AGAIN_FEEDBACK;
 
 		Space space = other.getBoard().get(row, column);
 		space.shoot();

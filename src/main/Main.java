@@ -18,7 +18,8 @@ public class Main {
 		Player player = new Player(BOARD1);
 		Player player2 = new Player(BOARD2);
 
-		Ship ship = new Ship(0, 0, 4, true, BOARD2);
+		Ship ship = new Ship("Carrier", 0, 0, 4, true, BOARD2);
+		Ship ship2 = new Ship("Submarine", 3, 4, 3, true, BOARD2);
 
 		while(true){
 			System.out.print(BOARD2.toString(true));
@@ -30,9 +31,9 @@ public class Main {
 	public static void test(){
 		BOARD1 = new Board(BOARD_SIZE);
 		BOARD2 = new Board(BOARD_SIZE);
-		Ship ship = new Ship(0, 0, 4, true, BOARD1);
-		Ship ship2 = new Ship(0, 1, 2, false, BOARD1);
-		Ship ship3 = new Ship(5, 6, 3, false, BOARD1);
+		Ship ship = new Ship("Carrier", 0, 0, 4, true, BOARD1);
+		Ship ship2 = new Ship("Carrier", 0, 1, 2, false, BOARD1);
+		Ship ship3 = new Ship("Carrier", 5, 6, 3, false, BOARD1);
 
 		BOARD1.get(1, 0).shoot();
 		BOARD1.get(0, 1).shoot();

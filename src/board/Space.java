@@ -48,6 +48,6 @@ public class Space {
 	public String hitString(){
 		if(ship == null) return Player.MISS_FEEDBACK;
 		if(!ship.sunk()) return Player.HIT_FEEDBACK;
-		return Player.SINK_FEEDBACK;
+		return String.format(Player.SINK_FEEDBACK, ship.getName());
 	}
 }
