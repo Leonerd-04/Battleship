@@ -6,7 +6,6 @@ import board.Space;
 import main.Main;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Player {
 	public static String HIT_FEEDBACK = "Hit!";
@@ -38,8 +37,9 @@ public class Player {
 
 	public void addShip(String name){
 		System.out.printf("Choose where your %s should go.%n", name);
-		int[] coords = takeSpaceInput();
+		int[] coords = takeSpaceInput(); //Gets coordinates from user
 
+		//Orientation will only be vertical if the input string begins with 'v'.
 		System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
 		boolean horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
 
@@ -48,24 +48,34 @@ public class Player {
 	}
 
 	public String takeTurn(Player other){
-		int[] coords = takeSpaceInput();
+		int[] coords = takeSpaceInput(); //Gets coordinates
 
+		//Checks if they are usable
 		if(coords[0] > Main.BOARD_SIZE || coords[1] > Main.BOARD_SIZE) return TRY_AGAIN_FEEDBACK;
 
+		//Shoots the space on the board that was chosen
 		Space space = other.getBoard().get(coords[0], coords[1]);
 		space.shoot();
 
+		//Returns a feedback string
+		//ie. "Hit!", "Miss!", "<Player> shot <Player2>'s <ship>"
 		return space.hitString();
 	}
 
+	//Prompts the user for coordinates and interprets the results
 	public int[] takeSpaceInput(){
-		String input = Main.SCN.nextLine();
-		if(input.length() < 3 || !Character.isDigit(input.charAt(2))) input = input.substring(0, 2);
-		input = input.toLowerCase();
+		String input = Main.SCN.nextLine(); //Raw input
+		if(input.length() < 3 || !Character.isDigit(input.charAt(2))) input = input.substring(0, 2); //Trims it
+		input = input.toLowerCase(); //Lowercase for simplicity
 
+		//Gives the index of the letter in the alphabet minus 1
+		//ie 'b' -> 1, 'e' -> 4, 'h' -> 7, etc
 		int column = input.charAt(0) - 'a';
+
+		//Parses for a number to use for the row
 		int row = Integer.parseInt(input.substring(1)) - 1;
 
+		//Returns the coordinates as an array
 		return new int[]{column, row};
 	}
 
