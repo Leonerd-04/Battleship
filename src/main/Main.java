@@ -18,29 +18,23 @@ public class Main {
 		Player player = new Player(BOARD1);
 		Player player2 = new Player(BOARD2);
 
-		Ship ship = new Ship("Carrier", 0, 0, 4, true, BOARD2);
-		Ship ship2 = new Ship("Submarine", 3, 4, 3, true, BOARD2);
+		player.setUpShips();
+	}
+
+	public static void test(){
+		BOARD1 = new Board(BOARD_SIZE);
+		BOARD2 = new Board(BOARD_SIZE);
+		Player player = new Player(BOARD1);
+		Player player2 = new Player(BOARD2);
+
+		Ship ship = new Ship(Ship.BATTLESHIP, 0, 0, true, BOARD2);
+		Ship ship2 = new Ship(Ship.SUBMARINE, 3, 4, true, BOARD2);
 
 		while(true){
 			System.out.print(BOARD2.toString(true));
 			String feedback = player.takeTurn(player2);
 			System.out.println(feedback);
 		}
-	}
-
-	public static void test(){
-		BOARD1 = new Board(BOARD_SIZE);
-		BOARD2 = new Board(BOARD_SIZE);
-		Ship ship = new Ship("Carrier", 0, 0, 4, true, BOARD1);
-		Ship ship2 = new Ship("Carrier", 0, 1, 2, false, BOARD1);
-		Ship ship3 = new Ship("Carrier", 5, 6, 3, false, BOARD1);
-
-		BOARD1.get(1, 0).shoot();
-		BOARD1.get(0, 1).shoot();
-		BOARD1.get(3, 4).shoot();
-		BOARD1.get(9, 9).shoot();
-
-		System.out.print(BOARD1);
 	}
 
 

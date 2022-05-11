@@ -1,6 +1,12 @@
 package board;
 
 public class Ship {
+	public final static String CARRIER = "Carrier";
+	public final static String BATTLESHIP = "Battleship";
+	public final static String CRUISER = "Cruiser";
+	public final static String SUBMARINE = "Submarine";
+	public final static String DESTROYER = "Destroyer";
+
 	private final String name;
 	private final boolean horizontal;
 	private final Space[] spaces; //The spaces occupied by a ship
@@ -22,10 +28,13 @@ public class Ship {
 		}
 	}
 
+	public Ship(String name, int x, int y, boolean horizontal, Board board){
+		this(name, x, y, lengthFromName(name), horizontal, board);
+	}
+
 	public String getName(){
 		return name;
 	}
-
 
 	public boolean isHorizontal(){
 		return horizontal;
@@ -38,5 +47,15 @@ public class Ship {
 		}
 
 		return true;
+	}
+
+	//Maps ship names to ship lengths
+	static int lengthFromName(String name){
+		switch(name){
+			case CARRIER: 					return 5;
+			case BATTLESHIP: 				return 4;
+			case CRUISER: case SUBMARINE: 	return 3;
+			default: 						return 2;
+		}
 	}
 }
