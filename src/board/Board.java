@@ -22,12 +22,29 @@ public class Board {
 	//Returns a string representing the board
 	public String toString(boolean hide){
 		StringBuilder str = new StringBuilder();
+		str.append(letterRow()).append("\n");
 
-		for(Space[] row : grid){
+		for(int i = 0; i < grid.length; i++){
+			Space[] row = grid[i];
+			str.append(String.format("%02d", i + 1)).append("  ");
+
 			for(Space space : row){
-				str.append(space.display(hide)).append(' ');
+				str.append(space.display(hide)).append("  ");
 			}
+
 			str.append("\n");
+		}
+
+		return str.toString();
+	}
+
+	//Returns a string representing a row of letters to be used to print the grid
+	private String letterRow(){
+		StringBuilder str = new StringBuilder();
+		str.append("    ");
+
+		for(int i = 0; i < grid.length; i++){
+			str.append((char)('A' + i)).append("  ");
 		}
 
 		return str.toString();
