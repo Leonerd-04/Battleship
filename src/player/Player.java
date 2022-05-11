@@ -38,15 +38,37 @@ public class Player {
 	}
 
 	public void addShip(String name){
-		System.out.printf("Choose where your %s should go.%n", name);
-		int[] coords = takeSpaceInput(); //Gets coordinates from user
+		int[] coords;
+		boolean horizontal;
 
-		//Orientation will only be vertical if the input string begins with 'v'.
-		System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
-		boolean horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
+		System.out.printf("Choose where your %s should go.%n", name);
+
+		while(true){
+			coords = takeSpaceInput(); //Gets coordinates from user
+
+			//Orientation will only be vertical if the input string begins with 'v'.
+			System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
+			horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
+
+			if(!wouldIntersect(coords[0], coords[1], Ship.lengthFromName(name), horizontal)) break;
+			System.out.println("This ship would intersect another ship. Choose a different location or orientation.");
+		}
 
 		ships.add(new Ship(name, coords[0], coords[1], horizontal, board));
 		System.out.print(board);
+	}
+
+	private boolean wouldIntersect(int x, int y, int length, boolean horizontal){
+		for(int i = 0; i < length; i++){
+			Space space;
+
+			if(horizontal) space = board.get(x + i, y);
+			else space = board.get(x, y + i);
+
+			if(space.isOccupied()) return true;
+		}
+
+		return false;
 	}
 
 	//Prompts the Player to take a shot at their opponent

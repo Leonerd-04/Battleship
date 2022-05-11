@@ -31,6 +31,10 @@ public class Space {
 		this.ship = ship;
 	}
 
+	public boolean isOccupied(){
+		return this.ship != null;
+	}
+
 	//Returns a char that decides how a space should be displayed on the board depending on its state
 	public char display(boolean hide){
 		if(!hit){

@@ -50,7 +50,7 @@ public class Ship {
 	}
 
 	//Maps ship names to ship lengths
-	static int lengthFromName(String name){
+	public static int lengthFromName(String name){
 		switch(name){
 			case CARRIER: 					return 5;
 			case BATTLESHIP: 				return 4;
