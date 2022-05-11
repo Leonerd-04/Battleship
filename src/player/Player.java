@@ -6,6 +6,7 @@ import board.Space;
 import main.Main;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Player {
 	public static String HIT_FEEDBACK = "Hit!";
@@ -37,34 +38,35 @@ public class Player {
 
 	public void addShip(String name){
 		System.out.printf("Choose where your %s should go.%n", name);
-		String input = takeSpaceInput().toLowerCase();
-		int column = input.charAt(0) - 'a';
-		int row = Integer.parseInt(input.substring(1)) - 1;
+		int[] coords = takeSpaceInput();
 
 		System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
 		boolean horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
 
-		ships.add(new Ship(name, column, row, horizontal, board));
+		ships.add(new Ship(name, coords[0], coords[1], horizontal, board));
 		System.out.println(board);
 	}
 
 	public String takeTurn(Player other){
-		String input = takeSpaceInput().toLowerCase();
-		int column = input.charAt(0) - 'a';
-		int row = Integer.parseInt(input.substring(1)) - 1;
-		if(column > Main.BOARD_SIZE || row > Main.BOARD_SIZE) return TRY_AGAIN_FEEDBACK;
+		int[] coords = takeSpaceInput();
 
-		Space space = other.getBoard().get(column, row);
+		if(coords[0] > Main.BOARD_SIZE || coords[1] > Main.BOARD_SIZE) return TRY_AGAIN_FEEDBACK;
+
+		Space space = other.getBoard().get(coords[0], coords[1]);
 		space.shoot();
 
 		return space.hitString();
 	}
 
-	public String takeSpaceInput(){
+	public int[] takeSpaceInput(){
 		String input = Main.SCN.nextLine();
 		if(input.length() < 3 || !Character.isDigit(input.charAt(2))) input = input.substring(0, 2);
+		input = input.toLowerCase();
 
-		return input;
+		int column = input.charAt(0) - 'a';
+		int row = Integer.parseInt(input.substring(1)) - 1;
+
+		return new int[]{column, row};
 	}
 
 	//Checks if a player has lost the game
