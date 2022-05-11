@@ -37,11 +37,12 @@ public class Player {
 		addShip(Ship.DESTROYER);
 	}
 
-	public void addShip(String name){
+	//Adds a ship to the list of player ships, while checking for its validity
+	public void addShip(String shipName){
 		int[] coords;
 		boolean horizontal;
 
-		System.out.printf("Choose where your %s should go.%n", name);
+		System.out.printf("Choose where your %s should go.%n", shipName);
 
 		while(true){
 			coords = takeSpaceInput(); //Gets coordinates from user
@@ -50,14 +51,26 @@ public class Player {
 			System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
 			horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
 
-			if(!wouldIntersect(coords[0], coords[1], Ship.lengthFromName(name), horizontal)) break;
-			System.out.println("This ship would intersect another ship. Choose a different location or orientation.");
+			//Checks if the ship would fall out of bounds and reprompts the user if it does.
+			if(wouldBeOutOfBounds(coords[0], coords[1], Ship.lengthFromName(shipName), horizontal)){
+				System.out.println("This ship would fall out of bounds. Choose a different location or orientation.");
+				continue;
+			}
+
+			//Checks if the ship would intersect another and reprompts the user if it does.
+			if(wouldIntersect(coords[0], coords[1], Ship.lengthFromName(shipName), horizontal)){
+				System.out.println("This ship would intersect another ship. Choose a different location or orientation.");
+				continue;
+			}
+
+			break;
 		}
 
-		ships.add(new Ship(name, coords[0], coords[1], horizontal, board));
+		ships.add(new Ship(shipName, coords[0], coords[1], horizontal, board));
 		System.out.print(board);
 	}
 
+	//Checks if a ship would intersect an existing ship
 	private boolean wouldIntersect(int x, int y, int length, boolean horizontal){
 		for(int i = 0; i < length; i++){
 			Space space;
@@ -69,6 +82,12 @@ public class Player {
 		}
 
 		return false;
+	}
+
+	//Checks if a ship would fall out of boundsA
+	private boolean wouldBeOutOfBounds(int x, int y, int length, boolean horizontal){
+		if(horizontal) return x + length >= Main.BOARD_SIZE;
+		return y + length >= Main.BOARD_SIZE;
 	}
 
 	//Prompts the Player to take a shot at their opponent
