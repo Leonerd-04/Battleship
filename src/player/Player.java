@@ -13,10 +13,12 @@ public class Player {
 	public static String SINK_FEEDBACK = "The opposing player's %s was sunk!";
 	public static String TRY_AGAIN_FEEDBACK = "Sorry, we can't understand your input. Try again.";
 
+	private final String name;
 	private final ArrayList<Ship> ships;
 	private final Board board;
 
-	public Player(Board board){
+	public Player(String name, Board board){
+		this.name = name;
 		this.board = board;
 		ships = new ArrayList<>();
 	}
@@ -26,7 +28,7 @@ public class Player {
 	}
 
 	public void setUpShips(){
-		System.out.println("Place your ships on the battlefield.");
+		System.out.printf("%s, place your ships on the battlefield.%n", name);
 		System.out.println(board);
 		addShip(Ship.CARRIER);
 		addShip(Ship.BATTLESHIP);
@@ -44,12 +46,15 @@ public class Player {
 		boolean horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
 
 		ships.add(new Ship(name, coords[0], coords[1], horizontal, board));
-		System.out.println(board);
+		System.out.print(board);
 	}
 
 	//Prompts the Player to take a shot at their opponent
 	//Returns a feedback string
 	public String takeTurn(Player other){
+		System.out.printf("%s's turn%n", name);
+		System.out.println("Choose a space to shoot.");
+
 		int[] coords = takeSpaceInput(); //Gets coordinates
 
 		//Checks if they are usable
