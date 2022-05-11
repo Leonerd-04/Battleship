@@ -47,6 +47,8 @@ public class Player {
 		System.out.println(board);
 	}
 
+	//Prompts the Player to take a shot at their opponent
+	//Returns a feedback string
 	public String takeTurn(Player other){
 		int[] coords = takeSpaceInput(); //Gets coordinates
 
