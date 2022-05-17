@@ -1,39 +1,63 @@
 package main;
 
 import board.Board;
-import board.Ship;
+import player.ComputerPlayer;
 import player.Player;
 
 import java.util.Scanner;
 
 public class Main {
+	public static String WIN = "%s has won!";
 	public static int BOARD_SIZE = 10;
 	static Board BOARD1;
 	static Board BOARD2;
 	public static Scanner SCN = new Scanner(System.in);
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws InterruptedException{
 		BOARD1 = new Board(BOARD_SIZE);
 		BOARD2 = new Board(BOARD_SIZE);
-		Player player = new Player("Player1", BOARD1);
-		Player player2 = new Player("Player2", BOARD2);
+		Player player = new Player("Player", BOARD1);
+		ComputerPlayer computer = new ComputerPlayer("Computer", BOARD2);
 
-		player.setUpShips();
-	}
-
-	public static void test(){
-		BOARD1 = new Board(BOARD_SIZE);
-		BOARD2 = new Board(BOARD_SIZE);
-		Player player = new Player("Player1", BOARD1);
-		Player player2 = new Player("Player2", BOARD2);
-
-		Ship ship = new Ship(Ship.BATTLESHIP, 0, 0, true, BOARD2);
-		Ship ship2 = new Ship(Ship.SUBMARINE, 3, 4, true, BOARD2);
+		//player.setUpShips();
+		player.autoSetUp();
+		computer.setUpShips();
+		String feedback;
 
 		while(true){
-			System.out.print(BOARD2.toString(true));
-			String feedback = player.takeTurn(player2);
-			System.out.println(feedback);
+			System.out.println("Your Board:");
+			System.out.println(player.getBoard());
+			Thread.sleep(2500);
+			/*
+			do {
+				System.out.println("Your Board:");
+				System.out.println(player.getBoard());
+				System.out.println("Computer's Board:");
+				System.out.println(computer.getBoard());
+
+				feedback = player.takeTurn(computer);
+				Thread.sleep(300);
+				System.out.println(feedback);
+				Thread.sleep(2000);
+
+			} while(feedback.equals(Player.TRY_AGAIN_FEEDBACK) || feedback.equals(Player.ALREADY_HIT_FEEDBACK));
+			*/
+
+			if(computer.hasLost()){
+				System.out.printf(WIN, player.getName());
+				return;
+			}
+
+			do {
+				feedback = computer.takeTurn(player);
+				System.out.println(feedback);
+				//Thread.sleep(2500);
+			} while(feedback.equals(Player.TRY_AGAIN_FEEDBACK) || feedback.equals(Player.ALREADY_HIT_FEEDBACK));
+
+			if(player.hasLost()){
+				System.out.printf(WIN, computer.getName());
+				return;
+			}
 		}
 	}
 
@@ -45,5 +69,4 @@ public class Main {
 			if(c != ' ') Thread.sleep(msDelay);
 		}
 	}
-
 }

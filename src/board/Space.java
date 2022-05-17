@@ -23,7 +23,7 @@ public class Space {
 	}
 
 	public void shoot(){
-		hit = true;
+		this.hit = true;
 	}
 
 	//Called whenever a ship is placed on a space
@@ -33,6 +33,10 @@ public class Space {
 
 	public boolean isOccupied(){
 		return this.ship != null;
+	}
+
+	public boolean isSunk(){
+		return isOccupied() && ship.sunk();
 	}
 
 	//Returns a char that decides how a space should be displayed on the board depending on its state

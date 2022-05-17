@@ -15,8 +15,16 @@ public class Board {
 	}
 
 	//Gets an index in the grid
-	public Space get(int x, int y){
+	public Space get(int x, int y) throws ArrayIndexOutOfBoundsException{
 		return grid[y][x];
+	}
+
+	public Space get(int[] coords) throws ArrayIndexOutOfBoundsException{
+		return grid[coords[1]][coords[0]];
+	}
+
+	public boolean outOfBounds(int[] coords){
+		return coords[0] < 0 || coords[0] >= grid.length || coords[1] < 0 || coords[1] >= grid.length;
 	}
 
 	//Returns a string representing the board

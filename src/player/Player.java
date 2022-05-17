@@ -12,15 +12,23 @@ public class Player {
 	public static String MISS_FEEDBACK = "Miss!";
 	public static String SINK_FEEDBACK = "The opposing player's %s was sunk!";
 	public static String TRY_AGAIN_FEEDBACK = "Sorry, we can't understand your input. Try again.";
+	public static String ALREADY_HIT_FEEDBACK = "This space was previously hit. Choose another space.";
 
-	private final String name;
-	private final ArrayList<Ship> ships;
-	private final Board board;
+
+	protected final String name;
+	protected final ArrayList<Ship> ships;
+	protected final Board board;
+	protected boolean print;
 
 	public Player(String name, Board board){
 		this.name = name;
 		this.board = board;
+		this.print = true;
 		ships = new ArrayList<>();
+	}
+
+	public String getName(){
+		return name;
 	}
 
 	public Board getBoard(){
@@ -29,7 +37,8 @@ public class Player {
 
 	public void setUpShips(){
 		System.out.printf("%s, place your ships on the battlefield.%n", name);
-		System.out.println(board);
+		if(print) System.out.println(board);
+
 		addShip(Ship.CARRIER);
 		addShip(Ship.BATTLESHIP);
 		addShip(Ship.CRUISER);
@@ -37,29 +46,53 @@ public class Player {
 		addShip(Ship.DESTROYER);
 	}
 
+	//Just for debugging
+	public void autoSetUp(){
+		ships.add(new Ship(Ship.CARRIER, 0, 0, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 1, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 2, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 3, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 4, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 5, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 6, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 7, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 8, true, board));
+		ships.add(new Ship(Ship.CARRIER, 0, 9, true, board));
+	}
+
 	//Adds a ship to the list of player ships, while checking for its validity
 	public void addShip(String shipName){
 		int[] coords;
 		boolean horizontal;
 
-		System.out.printf("Choose where your %s should go.%n", shipName);
+		if(print) System.out.printf("Choose where your %s should go.%n", shipName);
 
 		while(true){
-			coords = takeSpaceInput(); //Gets coordinates from user
+			try{
+				coords = takeSpaceInput(board); //Gets coordinates from user
+			} catch(Exception e){
+				if(print) System.out.println("Input could not be read, please try again");
+				continue;
+			}
 
 			//Orientation will only be vertical if the input string begins with 'v'.
-			System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
-			horizontal = Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
+			if(print) System.out.println("Should this be horizontal or vertical? (h/v, default is horizontal)");
+
+			try{
+				horizontal = takeBooleanInput();
+			} catch(Exception e){
+				horizontal = true;
+			}
 
 			//Checks if the ship would fall out of bounds and reprompts the user if it does.
 			if(wouldBeOutOfBounds(coords[0], coords[1], Ship.lengthFromName(shipName), horizontal)){
-				System.out.println("This ship would fall out of bounds. Choose a different location or orientation.");
+				if(print) System.out.println("This ship would fall out of bounds. Choose a different location or orientation.");
 				continue;
 			}
 
 			//Checks if the ship would intersect another and reprompts the user if it does.
 			if(wouldIntersect(coords[0], coords[1], Ship.lengthFromName(shipName), horizontal)){
-				System.out.println("This ship would intersect another ship. Choose a different location or orientation.");
+				if(print) System.out.println("This ship would intersect another ship. Choose a different location or orientation.");
 				continue;
 			}
 
@@ -67,7 +100,7 @@ public class Player {
 		}
 
 		ships.add(new Ship(shipName, coords[0], coords[1], horizontal, board));
-		System.out.print(board);
+		if(print) System.out.print(board);
 	}
 
 	//Checks if a ship would intersect an existing ship
@@ -92,18 +125,26 @@ public class Player {
 
 	//Prompts the Player to take a shot at their opponent
 	//Returns a feedback string
-	public String takeTurn(Player other){
+	public String takeTurn(Player other) throws InterruptedException{
 		System.out.printf("%s's turn%n", name);
+		Thread.sleep(300);
 		System.out.println("Choose a space to shoot.");
+		int[] coords;
 
-		int[] coords = takeSpaceInput(); //Gets coordinates
+		try{
+			coords = takeSpaceInput(other.getBoard()); //Gets coordinates
+		} catch(Exception e){
+			e.printStackTrace();
+			return TRY_AGAIN_FEEDBACK;
+		}
 
 		//Checks if they are usable
-		if(coords[0] > Main.BOARD_SIZE || coords[1] > Main.BOARD_SIZE) return TRY_AGAIN_FEEDBACK;
+		if(other.getBoard().outOfBounds(coords)) return TRY_AGAIN_FEEDBACK;
+		if(other.getBoard().get(coords).isHit()) return ALREADY_HIT_FEEDBACK;
 
 		//Shoots the space on the board that was chosen
-		Space space = other.getBoard().get(coords[0], coords[1]);
-		space.shoot();
+		Space space = other.getBoard().get(coords);
+		shoot(coords, other.getBoard());
 
 		//Returns a feedback string
 		//ie. "Hit!", "Miss!", "<Player> shot <Player2>'s <ship>"
@@ -111,7 +152,7 @@ public class Player {
 	}
 
 	//Prompts the user for coordinates and interprets the results
-	public int[] takeSpaceInput(){
+	public int[] takeSpaceInput(Board board) throws NumberFormatException{
 		String input = Main.SCN.nextLine(); //Raw input
 		if(input.length() < 3 || !Character.isDigit(input.charAt(2))) input = input.substring(0, 2); //Trims it
 		input = input.toLowerCase(); //Lowercase for simplicity
@@ -127,6 +168,14 @@ public class Player {
 		return new int[]{column, row};
 	}
 
+	public boolean takeBooleanInput() throws StringIndexOutOfBoundsException{
+		return Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
+	}
+
+	protected void shoot(Space space){
+		space.shoot();
+	}
+
 	//Checks if a player has lost the game
 	public boolean hasLost(){
 		for(Ship ship : ships){
@@ -136,4 +185,8 @@ public class Player {
 		return true;
 	}
 
+	protected void shoot(int[] coords, Board board){
+		board.get(coords).shoot();
+		System.out.println(board.get(coords));
+	}
 }
