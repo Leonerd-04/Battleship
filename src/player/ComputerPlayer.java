@@ -7,7 +7,6 @@ import main.Main;
 import java.util.ArrayList;
 
 public class ComputerPlayer extends Player{
-
 	boolean shooting;
 	ArrayList<int[]> shotSpaces;
 
@@ -15,17 +14,13 @@ public class ComputerPlayer extends Player{
 		super(name, board);
 		shooting = false;
 		shotSpaces = new ArrayList<>();
-		//print = false;
+		print = false;
 	}
 
 	private ArrayList<int[]> searchForCriticalSpaces(Board board){
 		ArrayList<int[]> result = new ArrayList<>();
 
 		for(int[] space : shotSpaces){
-			System.out.println("Sunk " + board.get(space).isSunk());
-			System.out.println("Hit " + board.get(space).isHit());
-			System.out.println(space[0] + ", " + space[1]);
-			System.out.println(board.get(space));
 			if(!isCritical(board.get(space))) continue;
 			result.add(space);
 		}
@@ -56,8 +51,6 @@ public class ComputerPlayer extends Player{
 		if(!shooting) return chooseRandomSpace();
 
 		ArrayList<int[]> criticalSpaces = searchForCriticalSpaces(board);
-
-		System.out.println(criticalSpaces.size());
 
 		if(criticalSpaces.isEmpty()) return chooseRandomSpace();
 
@@ -100,7 +93,6 @@ public class ComputerPlayer extends Player{
 
 	@Override
 	protected void shoot(int[] coords, Board board){
-		System.out.println(coords[0] + ", " + coords[1]);
 		shotSpaces.add(coords);
 		super.shoot(coords, board);
 	}

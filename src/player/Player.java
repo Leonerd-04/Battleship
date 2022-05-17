@@ -187,6 +187,5 @@ public class Player {
 
 	protected void shoot(int[] coords, Board board){
 		board.get(coords).shoot();
-		System.out.println(board.get(coords));
 	}
 }
