@@ -46,7 +46,7 @@ public class Player {
 		addShip(Ship.DESTROYER);
 	}
 
-	//Just for debugging
+	//Just for debugging the ai
 	public void autoSetUp(){
 		ships.add(new Ship(Ship.CARRIER, 0, 0, true, board));
 		ships.add(new Ship(Ship.CARRIER, 0, 1, true, board));
@@ -117,7 +117,7 @@ public class Player {
 		return false;
 	}
 
-	//Checks if a ship would fall out of boundsA
+	//Checks if a ship would fall out of bounds
 	private boolean wouldBeOutOfBounds(int x, int y, int length, boolean horizontal){
 		if(horizontal) return x + length >= Main.BOARD_SIZE;
 		return y + length >= Main.BOARD_SIZE;
@@ -170,10 +170,6 @@ public class Player {
 
 	public boolean takeBooleanInput() throws StringIndexOutOfBoundsException{
 		return Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
-	}
-
-	protected void shoot(Space space){
-		space.shoot();
 	}
 
 	//Checks if a player has lost the game

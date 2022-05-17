@@ -22,6 +22,7 @@ public class Space {
 		return hit;
 	}
 
+	//Shoots a space
 	public void shoot(){
 		this.hit = true;
 	}
@@ -35,6 +36,7 @@ public class Space {
 		return this.ship != null;
 	}
 
+	//Checks if a ship is sunk; the isOccupied() call prevents a NullPointerException
 	public boolean isSunk(){
 		return isOccupied() && ship.sunk();
 	}

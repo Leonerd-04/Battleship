@@ -23,6 +23,7 @@ public class Board {
 		return grid[coords[1]][coords[0]];
 	}
 
+	//Checks if a space would be out of bounds, given coordinates
 	public boolean outOfBounds(int[] coords){
 		return coords[0] < 0 || coords[0] >= grid.length || coords[1] < 0 || coords[1] >= grid.length;
 	}
@@ -34,10 +35,10 @@ public class Board {
 
 		for(int i = 0; i < grid.length; i++){
 			Space[] row = grid[i];
-			str.append(String.format("%02d", i + 1)).append("  ");
+			str.append(String.format("%02d", i + 1)).append("  "); //Adds row numbers
 
 			for(Space space : row){
-				str.append(space.display(hide)).append("  ");
+				str.append(space.display(hide)).append("  "); //Prints each display
 			}
 
 			str.append("\n");
@@ -49,7 +50,7 @@ public class Board {
 	//Returns a string representing a row of letters to be used to print the grid
 	private String letterRow(){
 		StringBuilder str = new StringBuilder();
-		str.append("    ");
+		str.append("    "); //Extra spaces to leave room for row numbers
 
 		for(int i = 0; i < grid.length; i++){
 			str.append((char)('A' + i)).append("  ");
