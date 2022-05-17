@@ -7,7 +7,7 @@ public class Space {
 	//Chars representing how Spaces are displayed on a game board
 	public static char UNKNOWN = '-';
 	public static char MISS = 'o';
-	public static char HIT = '*';
+	public static char HIT = 'x';
 	public static char SHIP_HORIZONTAL = '=';
 	public static char SHIP_VERTICAL = '|';
 
