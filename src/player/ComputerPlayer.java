@@ -58,6 +58,7 @@ public class ComputerPlayer extends Player{
 
 		ArrayList<int[]> criticalSpaces = searchForCriticalSpaces(board);
 
+		//If the computer doesn't find any spaces where a ship has been shot but not sunk, it chooses a random space.
 		if(criticalSpaces.isEmpty()) return chooseRandomSpace();
 
 		for(int[] space : criticalSpaces){
@@ -89,7 +90,11 @@ public class ComputerPlayer extends Player{
 				else continue;
 			}
 
-			//Just picks any space that hasn't already been hit if the critical space is by itself
+			//Just picks any space that hasn't already been hit if the critical space is by itself; situations like:
+			//- - -
+			//- x -
+			//- - -
+			//Where any space is a good guess
 			if(!board.outOfBounds(right) && !board.get(right).isHit()) return right;
 			if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
 			if(!board.outOfBounds(up) && !board.get(up).isHit()) return up;
