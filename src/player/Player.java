@@ -39,7 +39,7 @@ public class Player {
 		System.out.printf("%s, place your ships on the battlefield.%n", name);
 		if(print) System.out.println(board);
 
-		for(int i = Math.min(Ship.SHIP_NAMES.length, n); i > -1; i--){
+		for(int i = Math.min(Ship.SHIP_NAMES.length, n) - 1; i > -1; i--){
 			addShip(Ship.SHIP_NAMES[i]);
 		}
 	}
