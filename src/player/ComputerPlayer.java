@@ -90,10 +90,10 @@ public class ComputerPlayer extends Player{
 			}
 
 			//Just picks any space that hasn't already been hit if the critical space is by itself
-			if(!board.get(right).isHit()) return right;
-			if(!board.get(left).isHit()) return left;
-			if(!board.get(up).isHit()) return up;
-			if(!board.get(down).isHit()) return down;
+			if(!board.outOfBounds(right) && !board.get(right).isHit()) return right;
+			if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
+			if(!board.outOfBounds(up) && !board.get(up).isHit()) return up;
+			if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
 		}
 
 		return chooseRandomSpace();
