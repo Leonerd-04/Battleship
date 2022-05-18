@@ -8,6 +8,7 @@ public class Space {
 	public static char UNKNOWN = '-';
 	public static char MISS = 'o';
 	public static char HIT = 'x';
+	public static char SUNK = '/';
 	public static char SHIP_HORIZONTAL = '=';
 	public static char SHIP_VERTICAL = '|';
 
@@ -51,6 +52,7 @@ public class Space {
 		}
 
 		if(ship == null) return MISS;
+		if(ship.sunk()) return SUNK;
 		return HIT;
 	}
 
