@@ -77,12 +77,12 @@ public class ComputerPlayer extends Player{
 				if(!board.outOfBounds(right) && !board.get(right).isHit()) return right;
 				else continue;
 			}
-			if(isCritical(right, board)){
-				if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
-				else continue;
-			}
 			if(isCritical(up, board)){
 				if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
+				else continue;
+			}
+			if(isCritical(right, board)){
+				if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
 				else continue;
 			}
 			if(isCritical(down, board)){
@@ -96,8 +96,8 @@ public class ComputerPlayer extends Player{
 			//- - -
 			//Where any space is a good guess
 			if(!board.outOfBounds(right) && !board.get(right).isHit()) return right;
-			if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
 			if(!board.outOfBounds(up) && !board.get(up).isHit()) return up;
+			if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
 			if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
 		}
 
