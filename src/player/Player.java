@@ -35,15 +35,13 @@ public class Player {
 		return board;
 	}
 
-	public void setUpShips(){
+	public void setUpShips(int n){
 		System.out.printf("%s, place your ships on the battlefield.%n", name);
 		if(print) System.out.println(board);
 
-		addShip(Ship.CARRIER);
-		addShip(Ship.BATTLESHIP);
-		addShip(Ship.CRUISER);
-		addShip(Ship.SUBMARINE);
-		addShip(Ship.DESTROYER);
+		for(int i = 0; i < Ship.SHIP_NAMES.length && i < n; i++){
+			addShip(Ship.SHIP_NAMES[i]);
+		}
 	}
 
 	//Just for debugging the ai

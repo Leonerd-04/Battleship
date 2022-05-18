@@ -7,6 +7,8 @@ public class Ship {
 	public final static String SUBMARINE = "Submarine";
 	public final static String DESTROYER = "Destroyer";
 
+	public final static String[] SHIP_NAMES = new String[]{DESTROYER, SUBMARINE, CRUISER, BATTLESHIP, CARRIER};
+
 	private final String name;
 	private final boolean horizontal;
 	private final Space[] spaces; //The spaces occupied by a ship
