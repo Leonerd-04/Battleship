@@ -81,11 +81,11 @@ public class ComputerPlayer extends Player{
 				else continue;
 			}
 			if(isCritical(up, board)){
-				if(!board.outOfBounds(down) && !board.get(down).isHit()) return up;
+				if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
 				else continue;
 			}
 			if(isCritical(down, board)){
-				if(!board.outOfBounds(up) && !board.get(up).isHit()) return down;
+				if(!board.outOfBounds(up) && !board.get(up).isHit()) return up;
 				else continue;
 			}
 
