@@ -45,7 +45,7 @@ public class Player {
 	}
 
 	//Adds a ship to the list of player ships, while checking for its validity
-	public void addShip(String shipName){
+	private void addShip(String shipName){
 		int[] coords;
 		boolean horizontal;
 
@@ -136,7 +136,7 @@ public class Player {
 	}
 
 	//Prompts the player for coordinates and interprets the results
-	public int[] takeSpaceInput(Board board) throws NumberFormatException{
+	protected int[] takeSpaceInput(Board board) throws NumberFormatException{
 		String input = Main.SCN.nextLine(); //Raw input
 		if(input.length() < 3 || !Character.isDigit(input.charAt(2))) input = input.substring(0, 2); //Trims it
 		input = input.toLowerCase(); //Lowercase for simplicity
@@ -154,8 +154,12 @@ public class Player {
 
 	//Prompts the player to specify whether they want a horizontal or vertical ship
 	//horizontal -> true, vertical -> false
-	public boolean takeBooleanInput() throws StringIndexOutOfBoundsException{
+	protected boolean takeBooleanInput() throws StringIndexOutOfBoundsException{
 		return Main.SCN.nextLine().toLowerCase().charAt(0) != 'v';
+	}
+
+	protected void shoot(int[] coords, Board board){
+		board.get(coords).shoot();
 	}
 
 	//Checks if a player has lost the game
@@ -165,9 +169,5 @@ public class Player {
 		}
 
 		return true;
-	}
-
-	protected void shoot(int[] coords, Board board){
-		board.get(coords).shoot();
 	}
 }
