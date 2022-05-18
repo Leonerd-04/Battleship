@@ -119,8 +119,8 @@ public class Player {
 
 	//Checks if a ship would fall out of bounds
 	private boolean wouldBeOutOfBounds(int x, int y, int length, boolean horizontal){
-		if(horizontal) return x + length >= Main.BOARD_SIZE;
-		return y + length >= Main.BOARD_SIZE;
+		if(horizontal) return x + length > Main.BOARD_SIZE;
+		return y + length > Main.BOARD_SIZE;
 	}
 
 	//Prompts the Player to take a shot at their opponent
