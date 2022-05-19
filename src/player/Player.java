@@ -110,15 +110,14 @@ public class Player {
 	//Prompts the player to take a shot at their opponent
 	//Returns a feedback string
 	public String takeTurn(Player other) throws InterruptedException{
-		System.out.printf("%s's turn%n", name);
+		if(print) System.out.printf("%s's turn%n", name);
 		Thread.sleep(300);
-		System.out.println("Choose a space to shoot.");
+		if(print) System.out.println("Choose a space to shoot.");
 		int[] coords;
 
 		try{
 			coords = takeSpaceInput(other.getBoard()); //Gets coordinates
 		} catch(Exception e){
-			e.printStackTrace();
 			return TRY_AGAIN_FEEDBACK;
 		}
 
