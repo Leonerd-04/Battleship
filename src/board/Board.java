@@ -23,6 +23,10 @@ public class Board {
 		return grid[coords[1]][coords[0]];
 	}
 
+	public int getLength(){
+		return grid.length;
+	}
+
 	//Checks if a space would be out of bounds, given coordinates
 	public boolean outOfBounds(int[] coords){
 		return coords[0] < 0 || coords[0] >= grid.length || coords[1] < 0 || coords[1] >= grid.length;

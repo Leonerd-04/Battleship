@@ -40,8 +40,8 @@ public class ComputerPlayer extends Player{
 	}
 
 	//Picks a random space on a board as an array of integers
-	private int[] chooseRandomSpace(){
-		return new int[]{(int) (Main.BOARD_SIZE * Math.random()), (int) (Main.BOARD_SIZE * Math.random())};
+	private int[] chooseRandomSpace(int size){
+		return new int[]{(int) (size * Math.random()), (int) (size * Math.random())};
 	}
 
 	//Overrides takeTurn() to tell the ComputerPlayer that the game has started
@@ -54,12 +54,12 @@ public class ComputerPlayer extends Player{
 	//Overrides takeSpaceInput to use an ai instead of user input
 	@Override
 	public int[] takeSpaceInput(Board board){
-		if(!shooting) return chooseRandomSpace(); //If the game hasn't started, the computer places ships randomly.
+		if(!shooting) return chooseRandomSpace(board.getLength()); //If the game hasn't started, the computer places ships randomly.
 
 		ArrayList<int[]> criticalSpaces = searchForCriticalSpaces(board);
 
 		//If the computer doesn't find any spaces where a ship has been shot but not sunk, it chooses a random space.
-		if(criticalSpaces.isEmpty()) return chooseRandomSpace();
+		if(criticalSpaces.isEmpty()) return chooseRandomSpace(board.getLength());
 
 		for(int[] space : criticalSpaces){
 			//Checks the spaces next to a critical space
@@ -101,7 +101,7 @@ public class ComputerPlayer extends Player{
 			if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
 		}
 
-		return chooseRandomSpace();
+		return chooseRandomSpace(board.getLength());
 	}
 
 	//Chooses a random boolean; used for ship orientation only
