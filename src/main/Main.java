@@ -8,32 +8,53 @@ import java.util.Scanner;
 
 public class Main {
 	public static String WIN = "%s has won!";
-	public static int BOARD_SIZE = 10;
-	static Board BOARD1;
-	static Board BOARD2;
 	public static Scanner SCN = new Scanner(System.in);
 
 	public static void main(String[] args) throws InterruptedException{
-		BOARD1 = new Board(BOARD_SIZE);
-		BOARD2 = new Board(BOARD_SIZE);
-		Player player = new Player("Player", BOARD1);
-		ComputerPlayer computer = new ComputerPlayer("Computer", BOARD2);
+		System.out.println("Welcome to Battleship!");
+		boolean keepPlaying = true;
 
-		//player.setUpShips();
-		player.autoSetUp();
-		computer.setUpShips();
+		while(keepPlaying){
+			System.out.println("Choose your board size (4 - 15, default 10):");
+			int size = Math.min(Math.max(SCN.nextInt(), 4), 15);
+
+			System.out.println("Choose the number of ships on the field (2 - 5, default 4):");
+			int numShips = Math.min(Math.max(SCN.nextInt(), 2), 5);
+
+			SCN.nextLine();
+			playGame(size, numShips);
+
+			System.out.println("Would you like to play again? (y/n, default is y)");
+
+			try{
+				keepPlaying = SCN.nextLine().charAt(0) != 'n';
+			} catch(Exception ignored){
+
+			}
+
+		}
+
+		System.out.println("Thanks for playing!");
+
+	}
+
+	static void playGame(int boardSize, int numShips) throws InterruptedException{
+		Board playerBoard = new Board(boardSize);
+		Board compBoard = new Board(boardSize);
+		Player player = new Player("Player", playerBoard);
+		ComputerPlayer computer = new ComputerPlayer("Computer", compBoard);
+
+		//Prompts both players to set up their ships
+		player.setUpShips(numShips);
+		computer.setUpShips(numShips);
 		String feedback;
 
 		while(true){
-			System.out.println("Your Board:");
-			System.out.println(player.getBoard());
-			Thread.sleep(2500);
-			/*
 			do {
 				System.out.println("Your Board:");
 				System.out.println(player.getBoard());
 				System.out.println("Computer's Board:");
-				System.out.println(computer.getBoard());
+				System.out.println(computer.getBoard().toString(true));
 
 				feedback = player.takeTurn(computer);
 				Thread.sleep(300);
@@ -41,32 +62,40 @@ public class Main {
 				Thread.sleep(2000);
 
 			} while(feedback.equals(Player.TRY_AGAIN_FEEDBACK) || feedback.equals(Player.ALREADY_HIT_FEEDBACK));
-			*/
+
 
 			if(computer.hasLost()){
 				System.out.printf(WIN, player.getName());
+				System.out.println();
+
+				System.out.println("Your Board:");
+				System.out.println(player.getBoard());
+				System.out.println("Computer's Board:");
+				System.out.println(computer.getBoard());
+
 				return;
 			}
 
+			System.out.printf("%s's turn%n", computer.getName());
 			do {
 				feedback = computer.takeTurn(player);
-				System.out.println(feedback);
-				//Thread.sleep(2500);
 			} while(feedback.equals(Player.TRY_AGAIN_FEEDBACK) || feedback.equals(Player.ALREADY_HIT_FEEDBACK));
+
+			Thread.sleep(1500);
+			System.out.println(feedback);
+			Thread.sleep(1200);
 
 			if(player.hasLost()){
 				System.out.printf(WIN, computer.getName());
+				System.out.println();
+
+				System.out.println("Your Board:");
+				System.out.println(player.getBoard());
+				System.out.println("Computer's Board:");
+				System.out.println(computer.getBoard());
+
 				return;
 			}
-		}
-	}
-
-
-	//Prints with a scrolling delay effect
-	public static void printScroll(String str, long msDelay) throws InterruptedException{
-		for(char c : str.toCharArray()){
-			System.out.print(c);
-			if(c != ' ') Thread.sleep(msDelay);
 		}
 	}
 }
