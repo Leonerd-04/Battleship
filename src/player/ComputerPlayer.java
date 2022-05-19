@@ -100,6 +100,20 @@ public class ComputerPlayer extends Player{
 			if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
 		}
 
+		//If a line of critical spaces is found but isn't one ship (ie. adjacent ships), the AI will just hit a
+		//space around any critical space.
+		for(int[] space : criticalSpaces){
+			int[] left = new int[]{space[0] - 1, space[1]};
+			int[] right = new int[]{space[0] + 1, space[1]};
+			int[] down = new int[]{space[0], space[1] - 1};
+			int[] up = new int[]{space[0], space[1] + 1};
+
+			if(!board.outOfBounds(right) && !board.get(right).isHit()) return right;
+			if(!board.outOfBounds(up) && !board.get(up).isHit()) return up;
+			if(!board.outOfBounds(left) && !board.get(left).isHit()) return left;
+			if(!board.outOfBounds(down) && !board.get(down).isHit()) return down;
+		}
+
 		return chooseRandomSpace(board.getLength());
 	}
 
