@@ -32,6 +32,18 @@ public class Board {
 		return coords[0] < 0 || coords[0] >= grid.length || coords[1] < 0 || coords[1] >= grid.length;
 	}
 
+	//Returns a string representing a row of letters to be used to print the grid
+	private String letterRow(){
+		StringBuilder str = new StringBuilder();
+		str.append("    "); //Extra spaces to leave room for row numbers
+
+		for(int i = 0; i < grid.length; i++){
+			str.append((char)('A' + i)).append("  ");
+		}
+
+		return str.toString();
+	}
+
 	//Returns a string representing the board
 	public String toString(boolean hide){
 		StringBuilder str = new StringBuilder();
@@ -46,18 +58,6 @@ public class Board {
 			}
 
 			str.append("\n");
-		}
-
-		return str.toString();
-	}
-
-	//Returns a string representing a row of letters to be used to print the grid
-	private String letterRow(){
-		StringBuilder str = new StringBuilder();
-		str.append("    "); //Extra spaces to leave room for row numbers
-
-		for(int i = 0; i < grid.length; i++){
-			str.append((char)('A' + i)).append("  ");
 		}
 
 		return str.toString();

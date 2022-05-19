@@ -2,7 +2,6 @@ package player;
 
 import board.Board;
 import board.Space;
-import main.Main;
 
 import java.util.ArrayList;
 
@@ -51,9 +50,9 @@ public class ComputerPlayer extends Player{
 		return super.takeTurn(other);
 	}
 
-	//Overrides takeSpaceInput to use an ai instead of user input
+	//Overrides takeSpaceInput to use an AI instead of user input
 	@Override
-	public int[] takeSpaceInput(Board board){
+	protected int[] takeSpaceInput(Board board){
 		if(!shooting) return chooseRandomSpace(board.getLength()); //If the game hasn't started, the computer places ships randomly.
 
 		ArrayList<int[]> criticalSpaces = searchForCriticalSpaces(board);
@@ -106,7 +105,7 @@ public class ComputerPlayer extends Player{
 
 	//Chooses a random boolean; used for ship orientation only
 	@Override
-	public boolean takeBooleanInput(){
+	protected boolean takeBooleanInput(){
 		return Math.random() > 0.5;
 	}
 
