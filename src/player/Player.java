@@ -162,6 +162,8 @@ public class Player {
 		board.get(coords).shoot();
 	}
 
+	//Turns a coordinate array back into a letter/number pair
+	//ie (2, 7) -> "C8", (0, 9) -> "A10"
 	protected String coordString(int[] coords){
 		char col = (char)('A' + coords[0]);
 		int row = coords[1] + 1;
