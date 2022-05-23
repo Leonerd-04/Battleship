@@ -128,6 +128,7 @@ public class Player {
 		//Shoots the space on the board that was chosen
 		Space space = other.getBoard().get(coords);
 		shoot(coords, other.getBoard());
+		if(!print) System.out.printf("%s has shot %s%n", name, coordString(coords));
 
 		//Returns a feedback string
 		//ie. "Hit!", "Miss!", "<Player> shot <Player2>'s <ship>"
@@ -159,6 +160,13 @@ public class Player {
 
 	protected void shoot(int[] coords, Board board){
 		board.get(coords).shoot();
+	}
+
+	protected String coordString(int[] coords){
+		char col = (char)('A' + coords[0]);
+		int row = coords[1] + 1;
+
+		return col + "" + row;
 	}
 
 	//Checks if a player has lost the game
